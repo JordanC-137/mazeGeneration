@@ -10,7 +10,11 @@ lattice = nx.grid_2d_graph(L,L)
 
 #Node and eges of baeldung graph
 def _testgraph():
-    pass
+    test_graph_edges = [(0, 1, 8), (0, 2, 5), (1,3, 11), (1, 2, 9)]
+    test_graph_edges = map(lambda x: (x[0], x[1], {"weight": x[2]}), test_graph_edges)
+    test_graph = nx.Graph()
+    test_graph.add_edges_from(test_graph_edges)
+    return test_graph
 
 def get_nodes():
     return list(lattice)
@@ -55,3 +59,4 @@ def minSpanningTree():
             E.update(E_)
     return T;
 
+print(_testgraph()[0][1])
