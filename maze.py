@@ -8,6 +8,10 @@ import random
 L = 3
 lattice = nx.grid_2d_graph(L,L)
 
+#Node and eges of baeldung graph
+def _testgraph():
+    pass
+
 def get_nodes():
     return list(lattice)
 
@@ -32,18 +36,22 @@ def minSpanningTree():
     #T can be a set, to prevent duplicates from current envisioning of line 45
     T = []
     E = [(u, v) for (u, v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
-    """
+    
     while s2:
-        min_edge = min(E, key = lambda x: lattice.get_edge_data(*x)['weight])
+        min_edge = min(E, key = lambda x: lattice.get_edge_data(*x)['weight'])
         T.append(edge)
         E.remove(edge)
         (u, v) = edge
         if u in s2:
             s2.remove(u)
             s1.append(u)
-            #This implementation will remove edges that belong to 2 covered nodes. E.g. (1,2) edge in baeldung example
-            E = [(u,v), for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
+            #This implementation will remove edges that belong to 2 covered nodes. E.g. (1,2) edge in baeldung example. Adjusted since
+            E_ = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
+            E.update(E_)
         else:
             s2.remove(v)
             s1.append(v)
-    """
+            E = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
+            E.update(E_)
+    return T;
+
