@@ -19,6 +19,7 @@ def _testgraph():
 def get_nodes():
     return list(lattice)
 
+    #TODO: for git, create README and explore .gitignore files 
 def get_edges():
     return list(lattice.edges)
 
