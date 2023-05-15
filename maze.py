@@ -10,7 +10,7 @@ lattice = nx.grid_2d_graph(L,L)
 
 #Node and eges of baeldung graph
 def _testgraph():
-    test_graph_edges = [(0, 1, 8), (0, 2, 5), (1,3, 11), (1, 2, 9)]
+    test_graph_edges = [(0, 1, 8), (0, 2, 5), (1,3, 11), (1, 2, 9), (2, 3, 15), (2, 4, 10), (3,4, 7)]
     test_graph_edges = map(lambda x: (x[0], x[1], {"weight": x[2]}), test_graph_edges)
     test_graph = nx.Graph()
     test_graph.add_edges_from(test_graph_edges)
@@ -44,15 +44,17 @@ def minSpanningTree():
     s2 = [i for i in nodes if i is not arbit_node]
     print(f"Starter node {arbit_node}")
     print(f"Nodes: {nodes}")
-    print(s2)
-"""
-    edges = get_edges()
+    print(f"S2: {s2}")
+    edges = get_edges(test_graph)
+    print(f"Edges: {edges}")
     #T can be a set, to prevent duplicates from current envisioning of line 45
     T = []
     E = [(u, v) for (u, v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
-    print(E)
-    while s2:
-        min_edge = min(E, key = lambda x: tg.get_edge_data(*x)['weight'])
+    print(f"E: {E}")
+#    while s2:
+    min_edge = min(E, key = lambda x: tg.get_edge_data(*x)['weight'])
+    print(f"Min edge: {min_edge}")
+"""
         T.append(min_edge)
         E.remove(min_edge)
         (u, v) = min_edge
