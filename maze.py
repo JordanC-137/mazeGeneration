@@ -51,9 +51,9 @@ def minSpanningTree():
     T = []
     E = [(u, v) for (u, v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
     print(f"E: {E}")
-#    while s2:
-    min_edge = min(E, key = lambda x: tg.get_edge_data(*x)['weight'])
-    print(f"Min edge: {min_edge}")
+    while s2:
+        min_edge = min(E, key = lambda x: tg.get_edge_data(*x)['weight'])
+        print(f"Min edge: {min_edge}")
 """
         T.append(min_edge)
         E.remove(min_edge)
