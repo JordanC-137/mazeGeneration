@@ -16,12 +16,14 @@ def _testgraph():
     test_graph.add_edges_from(test_graph_edges)
     return test_graph
 
-def get_nodes():
-    return list(lattice)
+test_graph = _testgraph()
+
+def get_nodes(graph):
+    return list(graph)
 
     #TODO: for git, create README and explore .gitignore files 
-def get_edges():
-    return list(lattice.edges)
+def get_edges(graph):
+    return list(graph.edges)
 
 def assign_random_edges():
     for source, destination in lattice.edges():
@@ -32,21 +34,28 @@ def draw_graph(route):
     plt.savefig(route)
 
 def minSpanningTree():
-    nodes = get_nodes()
-    arbit_node = random.choice(nodes)
+    #TODO figure out accessing node in terms of label vs surrounding neighbour data
+    tg = _testgraph()
+    nodes = get_nodes(test_graph)
+    arbit_node = 0
+    #nodes = get_nodes()
+    #arbit_node = random.choice(nodes)
     s1 = [arbit_node]
     s2 = [i for i in nodes if i is not arbit_node]
-
+    print(f"Starter node {arbit_node}")
+    print(f"Nodes: {nodes}")
+    print(s2)
+"""
     edges = get_edges()
     #T can be a set, to prevent duplicates from current envisioning of line 45
     T = []
     E = [(u, v) for (u, v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
-    
+    print(E)
     while s2:
-        min_edge = min(E, key = lambda x: lattice.get_edge_data(*x)['weight'])
-        T.append(edge)
-        E.remove(edge)
-        (u, v) = edge
+        min_edge = min(E, key = lambda x: tg.get_edge_data(*x)['weight'])
+        T.append(min_edge)
+        E.remove(min_edge)
+        (u, v) = min_edge
         if u in s2:
             s2.remove(u)
             s1.append(u)
@@ -58,6 +67,7 @@ def minSpanningTree():
             s1.append(v)
             E = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
             E.update(E_)
-    return T;
+    return T; """
 
-print(_testgraph()[0][1])
+#print(_testgraph()[0][1])
+minSpanningTree()
