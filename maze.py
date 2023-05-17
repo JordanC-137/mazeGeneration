@@ -33,6 +33,9 @@ def draw_graph(route):
     nx.draw(lattice)
     plt.savefig(route)
 
+def logSpanTreeValues(s1, s2, T, E):
+    print(f"S1: {s1}    S2: {s2}    T: {T}    E: {E}")
+
 def minSpanningTree():
     #TODO figure out accessing node in terms of label vs surrounding neighbour data
     tg = _testgraph()
@@ -47,7 +50,7 @@ def minSpanningTree():
     print(f"S2: {s2}")
     edges = get_edges(test_graph)
     print(f"Edges: {edges}")
-    #T can be a set, to prevent duplicates from current envisioning of line 45
+    #TODO Adjust to use sets rather than lists
     T = []
     E = [(u, v) for (u, v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
     print(f"E: {E}")
@@ -86,12 +89,12 @@ def minSpanningTree():
             s1.append(u)
             #This implementation will remove edges that belong to 2 covered nodes. E.g. (1,2) edge in baeldung example. Adjusted since
             E_ = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
-            E.update(E_)
+            E.extend(E_)
         else:
             s2.remove(v)
             s1.append(v)
-            E = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
-            E.update(E_)
+            E_ = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
+            E.extend(E_)
     return T; """
 
 #print(_testgraph()[0][1])
