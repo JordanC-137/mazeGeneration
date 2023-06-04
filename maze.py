@@ -36,6 +36,11 @@ def draw_graph(route):
 def logSpanTreeValues(s1, s2, T, E):
     print(f"S1: {s1}    S2: {s2}    T: {T}    E: {E}")
 
+def removeIrreleventEdges(x, s1):
+    if x[1] in s1 and x[0] in s1:
+        return False
+    return True
+
 def minSpanningTree():
     #TODO figure out accessing node in terms of label vs surrounding neighbour data
     tg = _testgraph()
@@ -43,34 +48,41 @@ def minSpanningTree():
     arbit_node = 0
     #nodes = get_nodes()
     #arbit_node = random.choice(nodes)
-    s1 = [arbit_node]
+    s1 = {arbit_node}
     s2 = [i for i in nodes if i is not arbit_node]
-    print(f"Starter node {arbit_node}")
-    print(f"Nodes: {nodes}")
-    print(f"S2: {s2}")
+    s2 = set(s2)
+    
     edges = get_edges(test_graph)
-    print(f"Edges: {edges}")
     #TODO Adjust to use sets rather than lists
     T = []
     E = [(u, v) for (u, v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
-    print(f"E: {E}")
-    #While loop distinction part
-    min_edge = min(E, key = lambda x: tg.get_edge_data(*x)['weight'])
-    print(f"Min edge: {min_edge}")
-    T.append(min_edge)
-    E.remove(min_edge)
-    (u, v) = min_edge
-    if u in s2:
-        s2.remove(u)
-        s1.append(u)
-        #This implementation will remove edges that belong to 2 covered nodes. E.g. (1,2) edge in baeldung example. Adjusted since
-        E_ = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
-        E.extend(E_)
-    else:
-        s2.remove(v)
-        s1.append(v)
-        E_ = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
-        E.extend(E_)
+    E = set(E)
+    while s2:
+
+        min_edge = min(E, key = lambda x: tg.get_edge_data(*x)['weight'])
+        print(f"Min edge: {min_edge}")
+        print(f"S1: {s1}")
+        print(f"S2: {s2}")
+        print(f"T: {T}")
+        print(f"E: {E}")
+        print()
+        T.append(min_edge)
+        E.remove(min_edge)
+        (u, v) = min_edge
+        if u in s2:
+            s2.remove(u)
+            s1.add(u)
+            #This implementation will remove edges that belong to 2 covered nodes. E.g. (1,2) edge in baeldung example. Adjusted since
+            E_ = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
+            E.update(E_)
+            E = set(filter(lambda x: removeIrreleventEdges(x, s1), E))
+        else:
+            s2.remove(v)
+            s1.add(v)
+            E_ = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
+            E.update(E_)
+            E = set(filter(lambda x: removeIrreleventEdges(x, s1), E))
+
     print()
     print(f"Final S1: {s1}")
     print(f"Final S2: {s2}")
