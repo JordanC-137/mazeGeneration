@@ -16,6 +16,12 @@ def _testgraph():
     test_graph.add_edges_from(test_graph_edges)
     return test_graph
 
+def _testgraph2():
+    tg = nx.grid_2d_graph(3,3)
+    tg[(0,0)][(0,1)]["weight"] = 5
+    return tg
+
+
 test_graph = _testgraph()
 
 def get_nodes(graph):
@@ -88,26 +94,7 @@ def minSpanningTree():
     print(f"Final S2: {s2}")
     print(f"Final E: {E}")
     print(f"Final T: {T}")
-"""
 
-    while s2:
-        min_edge = min(E, key = lambda x: tg.get_edge_data(*x)['weight'])
-        print(f"Min edge: {min_edge}")
-        T.append(min_edge)
-        E.remove(min_edge)
-        (u, v) = min_edge
-        if u in s2:
-            s2.remove(u)
-            s1.append(u)
-            #This implementation will remove edges that belong to 2 covered nodes. E.g. (1,2) edge in baeldung example. Adjusted since
-            E_ = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
-            E.extend(E_)
-        else:
-            s2.remove(v)
-            s1.append(v)
-            E_ = [(u,v) for (u,v) in edges if u in s1 and v in s2 or u in s2 and v in s1]
-            E.extend(E_)
-    return T; """
+print(_testgraph2()[(0,1)])
 
-#print(_testgraph()[0][1])
-minSpanningTree()
+#minSpanningTree()
