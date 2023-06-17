@@ -20,8 +20,12 @@ def _testgraph2():
     tg = nx.grid_2d_graph(3,3)
     edge_weights = [1, 5, 6, 10, 7, 16, 11, 4, 5, 3, 2, 12]
     #tg[(0,0)][(0,1)]["weight"] = 5
-    for i, index in enumerate(tg.edges()):
-        i["weight"] = edge_weights[index]
+    for index, i in enumerate(tg.edges()):
+        #print(index, i)
+        source = i[0]
+        dest = i[1]
+        tg[source][dest]['weight'] = edge_weights[index]
+        #i["weight"] = edge_weights[index]
     return tg
 
 
@@ -98,6 +102,10 @@ def minSpanningTree():
     print(f"Final E: {E}")
     print(f"Final T: {T}")
 
-print(_testgraph2().edges())
-
+#print(_testgraph2().edges())
 #minSpanningTree()
+
+for i in _testgraph2().edges:
+    print(i)
+
+#_testgraph2()
