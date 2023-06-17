@@ -18,7 +18,7 @@ def _testgraph():
 
 def _testgraph2():
     tg = nx.grid_2d_graph(3,3)
-    edge_weights = []
+    edge_weights = [1, 5, 6, 10, 7, 16, 11, 4, 5, 3, 2, 12]
     #tg[(0,0)][(0,1)]["weight"] = 5
     for i, index in enumerate(tg.edges()):
         i["weight"] = edge_weights[index]
