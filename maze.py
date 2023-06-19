@@ -25,7 +25,6 @@ def _testgraph2():
         source = i[0]
         dest = i[1]
         tg[source][dest]['weight'] = edge_weights[index]
-        #i["weight"] = edge_weights[index]
     return tg
 
 
@@ -42,8 +41,11 @@ def assign_random_edges():
     for source, destination in lattice.edges():
         lattice[source][destination]['weight'] = random.randint(0, 100)
 
-def draw_graph(route):
-    nx.draw(lattice)
+def draw_graph(route, graph):
+    labels = {e: graph.edges[e]['weight'] for e in graph.edges}
+    pos = nx.spring_layout(graph, k=5)
+    nx.draw(graph)
+    nx.draw_networkx_edge_labels(graph, pos, edge_labels = labels)
     plt.savefig(route)
 
 def logSpanTreeValues(s1, s2, T, E):
@@ -105,7 +107,9 @@ def minSpanningTree():
 #print(_testgraph2().edges())
 #minSpanningTree()
 
+graph = _testgraph2()
 for i in _testgraph2().edges:
     print(i)
 
-#_testgraph2()
+tg = _testgraph2()
+draw_graph("png.png", tg)
