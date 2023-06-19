@@ -16,6 +16,8 @@ def _testgraph():
     test_graph.add_edges_from(test_graph_edges)
     return test_graph
 
+#TODO Use Graph.adj function as seen at bottom of file to add edge_weights to graph in correct corresponding order.
+# Currently g.edges returns values in relation to node magnitude rather than order of addition
 def _testgraph2():
     tg = nx.grid_2d_graph(3,3)
     edge_weights = [1, 5, 6, 10, 7, 16, 11, 4, 5, 3, 2, 12]
@@ -108,8 +110,9 @@ def minSpanningTree():
 #minSpanningTree()
 
 graph = _testgraph2()
-for i in _testgraph2().edges:
-    print(i)
 
-tg = _testgraph2()
-draw_graph("png.png", tg)
+ls = [[n, dict] for n, dict in graph.adj]
+print(ls)
+
+#tg = _testgraph2()
+#draw_graph("png.png", tg)
