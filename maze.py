@@ -1,6 +1,7 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import random
+import pprint
 
 #https://www.baeldung.com/cs/maze-generation
 # TODO export lattice object to seperate Maze class with attributes such as start and end point
@@ -20,13 +21,18 @@ def _testgraph():
 # Currently g.edges returns values in relation to node magnitude rather than order of addition
 def _testgraph2():
     tg = nx.grid_2d_graph(3,3)
-    edge_weights = [1, 5, 6, 10, 7, 16, 11, 4, 5, 3, 2, 12]
-    #tg[(0,0)][(0,1)]["weight"] = 5
-    for index, i in enumerate(tg.edges()):
-        #print(index, i)
-        source = i[0]
-        dest = i[1]
-        tg[source][dest]['weight'] = edge_weights[index]
+    tg[(0, 0)][(0,1)]['weight'] = 5
+    tg[(0, 1)][(0,2)]['weight'] = 10
+    tg[(0, 0)][(1,0)]['weight'] = 1
+    tg[(0, 1)][(1,1)]['weight'] = 6
+    tg[(0, 2)][(1,2)]['weight'] = 7
+    tg[(1, 0)][(1,1)]['weight'] = 11
+    tg[(1, 1)][(1,2)]['weight'] = 5
+    tg[(1, 0)][(2,0)]['weight'] = 16
+    tg[(1, 1)][(2,1)]['weight'] = 4
+    tg[(1, 2)][(2,2)]['weight'] = 3
+    tg[(2, 0)][(2,1)]['weight'] = 2
+    tg[(2, 1)][(2,2)]['weight'] = 12
     return tg
 
 
@@ -111,8 +117,6 @@ def minSpanningTree():
 
 graph = _testgraph2()
 
-ls = [[n, dict] for n, dict in graph.adj]
-print(ls)
-
-#tg = _testgraph2()
-#draw_graph("png.png", tg)
+#ls = [[n, dict] for n, dict in graph.adj]
+#print(ls)
+#print(graph.adj)
