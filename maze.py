@@ -112,9 +112,6 @@ def minSpanningTree():
     print(f"Final E: {E}")
     print(f"Final T: {T}")
 
-#print(_testgraph2().edges())
-#minSpanningTree()
-
 graph = _testgraph2()
 
 #ls = [[n, dict] for n, dict in graph.adj]
