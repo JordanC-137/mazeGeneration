@@ -16,8 +16,14 @@ class Matrix():
         pos2 = self.nodes.index(node2)
         if weight:
             self.grid[pos1][pos2] = weight
-            self.grid[pos1][pos2] = weight
+            self.grid[pos2][pos1] = weight
+        else:
+            random_value = random.randint(0,20)
+            self.grid[pos1][pos2] = random_value
+            self.grid[pos2][pos1] = random_value
         print(self.grid)
 
 m = Matrix()
+print()
 m.add_connection((0,0), (0,1), 5)
+m.add_connection((1,2), (2,2))
