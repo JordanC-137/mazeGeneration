@@ -8,7 +8,6 @@ class Matrix:
     def __init__(self):
         self.nodes = list(itertools.product([0,1,2], repeat = 2))
         self.grid = [[None for i in range(len(self.nodes))] for i in range(len(self.nodes))]
-        self.display_grid()
 
     def display_grid(self):
         [print(i) for i in self.grid]
@@ -35,12 +34,15 @@ class Matrix:
         self.grid[pos1][pos2] = None
         self.grid[pos2][pos1] = None
 
+    #Traverse grid, not crossing i=j diagonal
+    def traverse_connections(self):
+        spots = []
+        prac_grid = [[0,1,2,3], [4,5,6,7], [8,9,10, 11], [12, 13, 14, 15]]
+        for j_index, j in enumerate(prac_grid):
+            spots += prac_grid[j_index][j_index + 1:]
+        return spots
+
 
 m = Matrix()
-print()
-m.add_connection((0,0), (0,1), 5)
-m.add_connection((1,2), (2,2))
 
-m.remove_connection((1,2), (2,2))
-print()
-m.display_grid()
+print(m.traverse_connections())
