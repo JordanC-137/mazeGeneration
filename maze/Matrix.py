@@ -38,12 +38,12 @@ class Matrix:
     #Traverse grid, not crossing i=j diagonal
     def traverse_connections(self):
         spots = []
-        prac_grid = [[0,1,2,3], [4,5,6,7], [8,9,10, 11], [12, 13, 14, 15]]
-        for j_index, j in enumerate(prac_grid):
-            spots += prac_grid[j_index][j_index + 1:]
+        #prac_grid = [[0,1,2,3], [4,5,6,7], [8,9,10, 11], [12, 13, 14, 15]]
+        for j_index, j in enumerate(self.grid):
+            spots += self.grid[j_index][j_index + 1:]
         return spots
 
 if __name__ == "__main__":
-    m = Matrix()
+    m = Matrix([[0,1,2,3], [4,5,6,7], [8,9,10, 11], [12, 13, 14, 15]])
     print(m.nodes)
     print(m.traverse_connections())
