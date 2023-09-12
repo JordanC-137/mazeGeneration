@@ -3,8 +3,11 @@ import random
 
 
 class Matrix:
-    def __init__(self):
-        self.nodes = list(itertools.product([0,1,2], repeat = 2))
+    def __init__(self, nodes = None):
+        if nodes:
+            self.nodes = nodes
+        else:
+            self.nodes = list(itertools.product([0,1,2], repeat = 2))
         self.grid = [[None for i in range(len(self.nodes))] for i in range(len(self.nodes))]
 
     def display_grid(self):
