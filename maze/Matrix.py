@@ -44,6 +44,7 @@ class Matrix:
         return spots
 
 if __name__ == "__main__":
-    m = Matrix([[0,1,2,3], [4,5,6,7], [8,9,10, 11], [12, 13, 14, 15]])
+    m = Matrix([1,2,3,4])
     print(m.nodes)
+    print(m.grid)
     print(m.traverse_connections())
