@@ -19,7 +19,7 @@ class TestMod(unittest.TestCase):
         ls = [[None, None, None, 10],[None, None, 4, None],[None, 4, None, None],[10, None, None, None]]
         self.assertEqual(m.grid, ls)
 
-    def test_connections(self):
+    def test_traverse_connections(self):
         m = Matrix([1,2,3,4])
         m.add_connection(1, 3, 5)
         expect = [Connection(0, 0, None), Connection(0, 1, 5), Connection(0, 2, None), Connection(1, 1, None), Connection(1, 2, None), Connection(2, 2, None)]
