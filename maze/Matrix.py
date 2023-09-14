@@ -40,12 +40,9 @@ class Matrix:
     def traverse_connections(self):
         spots = []
         coord_weights = []
-        #prac_grid = [[0,1,2,3], [4,5,6,7], [8,9,10, 11], [12, 13, 14, 15]]
         Connection = namedtuple("Connection", "x y weight")
         for j_index, j in enumerate(self.grid):
-            #spots += self.grid[j_index][j_index + 1:]
             ls = self.grid[j_index][j_index + 1:]
-            #coord_weights += [(j_index, j_index + i[0], {"weight": i[1]}) for i in enumerate(ls)]
             coord_weights += [Connection(j_index, j_index + i[0], i[1]) for i in enumerate(ls)]
         return coord_weights
 
