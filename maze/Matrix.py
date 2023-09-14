@@ -1,5 +1,6 @@
 import itertools
 import random
+from collections import namedtuple
 
 
 class Matrix:
@@ -40,14 +41,18 @@ class Matrix:
         spots = []
         coord_weights = []
         #prac_grid = [[0,1,2,3], [4,5,6,7], [8,9,10, 11], [12, 13, 14, 15]]
+        Connection = namedtuple("Connection", "x y weight")
         for j_index, j in enumerate(self.grid):
             #spots += self.grid[j_index][j_index + 1:]
             ls = self.grid[j_index][j_index + 1:]
-            coord_weights += [(j_index, j_index + i[0], {"weight": i[1]}) for i in enumerate(ls)]
+            #coord_weights += [(j_index, j_index + i[0], {"weight": i[1]}) for i in enumerate(ls)]
+            coord_weights += [Connection(j_index, j_index + i[0], i[1]) for i in enumerate(ls)]
         return coord_weights
 
 if __name__ == "__main__":
     m = Matrix([1,2,3,4])
     print(m.nodes)
     print(m.grid)
-    print(m.traverse_connections())
+    m.add_connection(1,2,5)
+    ls = m.traverse_connections()
+    print(ls[0].weight)
