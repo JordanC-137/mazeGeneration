@@ -2,6 +2,7 @@ import itertools
 import random
 from collections import namedtuple
 
+Connection = namedtuple("Connection", "x y weight")
 
 class Matrix:
     def __init__(self, nodes = None):
@@ -40,7 +41,7 @@ class Matrix:
     def traverse_connections(self):
         spots = []
         coord_weights = []
-        Connection = namedtuple("Connection", "x y weight")
+        #Connection = namedtuple("Connection", "x y weight")
         for j_index, j in enumerate(self.grid):
             ls = self.grid[j_index][j_index + 1:]
             coord_weights += [Connection(j_index, j_index + i[0], i[1]) for i in enumerate(ls)]
