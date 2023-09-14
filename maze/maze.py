@@ -12,8 +12,7 @@ def build_maze(m):
     m.add_connection((1,1), (2,1))
     m.add_connection((2,2), (1,2))
     m.add_connection((2,0), (2,1))
-    m.add_connection((2,0), (1,0))
-    m.add_connection((2,0), (2,1))
+    m.add_connection((2,0), (1,0)) 
     m.add_connection((2,1), (2,2))
     
 
