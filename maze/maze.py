@@ -1,4 +1,4 @@
-from Matrix import Matrix
+from Matrix import Matrix, Connection
 
 
 def build_maze(m):
@@ -15,6 +15,16 @@ def build_maze(m):
     m.add_connection((2,0), (1,0)) 
     m.add_connection((2,1), (2,2))
     
+def pop_minimum_connection(ls):
+    indexed_ls = [i for i in enumerate(ls)]
+    print(indexed_ls)
+    #min_element_with_index = min(indexed_ls, key = lambda x: x[1].weight)
+    index_of_min_connection, min_connection = min(indexed_ls, key = lambda x: x[1].weight)
+    ls.pop(index_of_min_connection)
+    return (min_connection,ls)
 
-m = Matrix([1,2,3,4])
-print(m.nodes)
+
+a = Connection(0, 5, 10)
+b = Connection(1, 4, 6)
+c = Connection(3, 3, 2)
+pop_minimum_connection([a,b,c])
