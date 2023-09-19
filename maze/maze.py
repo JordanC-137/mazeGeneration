@@ -18,7 +18,6 @@ def build_maze(m):
 def pop_minimum_connection(ls):
     indexed_ls = [i for i in enumerate(ls)]
     print(indexed_ls)
-    #min_element_with_index = min(indexed_ls, key = lambda x: x[1].weight)
     index_of_min_connection, min_connection = min(indexed_ls, key = lambda x: x[1].weight)
     ls.pop(index_of_min_connection)
     return (min_connection,ls)
