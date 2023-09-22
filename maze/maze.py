@@ -1,3 +1,4 @@
+from audioop import cross
 from Matrix import Matrix, Connection
 
 
@@ -22,10 +23,17 @@ def pop_minimum_connection(ls):
     ls.pop(index_of_min_connection)
     return (min_connection,ls)
 
+def cross_set_connections(s1, s2, ls):
+    l1 = [i for i in ls if i.x in s1 and i.y in s2]
+    l2 = [i for i in ls if i.x in s2 and i.y in s1]
+    return l1 + l2
+
 def mst(m):
     s1 = [m.nodes[0]]
     s2 = m.nodes[1:]
-    pass
+    T = []
+    edges = m.traverse_connections()
+    E = cross_set_connections(s1, s2, edges)
 
 
 a = Connection(0, 5, 10)
