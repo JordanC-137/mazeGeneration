@@ -22,6 +22,11 @@ def pop_minimum_connection(ls):
     ls.pop(index_of_min_connection)
     return (min_connection,ls)
 
+def mst(m):
+    s1 = [m.nodes[0]]
+    s2 = m.nodes[1:]
+    pass
+
 
 a = Connection(0, 5, 10)
 b = Connection(1, 4, 6)
