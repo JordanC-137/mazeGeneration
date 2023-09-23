@@ -1,6 +1,7 @@
-
 import unittest
-from maze.Matrix import Matrix, Connection
+import sys
+sys.path.append("../maze")
+from Matrix import Matrix, Connection
 
 class TestMod(unittest.TestCase):
     def test_initial_nodes(self):
