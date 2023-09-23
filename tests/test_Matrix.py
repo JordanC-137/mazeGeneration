@@ -3,7 +3,7 @@ import sys
 sys.path.append("../maze")
 from Matrix import Matrix, Connection
 
-class TestMod(unittest.TestCase):
+class TestMatrix(unittest.TestCase):
     def test_initial_nodes(self):
         m = Matrix()
         self.assertEqual(m.nodes, [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1), (2, 2)])

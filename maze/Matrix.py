@@ -15,6 +15,7 @@ class Matrix:
     def display_grid(self):
         [print(i) for i in self.grid]
     
+    #Error handle in here to accomodate and catch connections to non-existant nodes. Maintain flexibility of build_maze
     def add_connection(self, node1, node2, weight = None):
         if node1 not in self.nodes or node2 not in self.nodes:
             raise IndexError("One of these nodes is not in the grid")
@@ -27,7 +28,6 @@ class Matrix:
             random_value = random.randint(0,20)
             self.grid[pos1][pos2] = random_value
             self.grid[pos2][pos1] = random_value
-        self.display_grid()
 
     def remove_connection(self, node1, node2):
         if node1 not in self.nodes or node2 not in self.nodes:
@@ -52,4 +52,4 @@ if __name__ == "__main__":
     print(m.grid)
     m.add_connection(1,2,5)
     ls = m.traverse_connections()
-    print(ls[0].weight)
+    print(ls)
