@@ -25,7 +25,9 @@ def pop_minimum_connection(ls):
 
 def cross_set_connections(s1, s2, ls):
     l1 = [i for i in ls if i.x in s1 and i.y in s2]
-    l2 = [i for i in ls if i.x in s2 and i.y in s1]
+    #Twist x, y order for l2 so that maintained consistency for u in s1 and v in s2
+    #l2 = [i for i in ls if i.x in s2 and i.y in s1]
+    l2 = [Connection(i.y, i.x, i.weight) for i in ls if i.x in s2 and i.y in s1]
     return l1 + l2
 
 def mst(m):
@@ -34,6 +36,10 @@ def mst(m):
     T = []
     edges = m.traverse_connections()
     E = cross_set_connections(s1, s2, edges)
+    while s2:
+        min_edge, E_removed_minimum = pop_minimum_connection(E)
+        E = E_removed_minimum
+
 
 
 a = Connection(0, 5, 10)
