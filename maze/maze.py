@@ -37,6 +37,12 @@ def mst(m):
     while s2:
         min_edge, E_removed_minimum = pop_minimum_connection(E)
         E = E_removed_minimum
+        T.append(min_edge)
+        v = E[1]
+        s2.remove(v)
+        s1.append(v)
+        E.update(cross_set_connections(s1, s2, E))
+    return T
 
 
 
