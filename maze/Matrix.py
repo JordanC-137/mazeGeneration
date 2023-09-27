@@ -14,6 +14,10 @@ class Matrix:
 
     def display_grid(self):
         [print(i) for i in self.grid]
+        
+    def element(self, index):
+        return self.nodes[index]
+
     
     #Error handle in here to accomodate and catch connections to non-existant nodes. Maintain flexibility of build_maze
     def add_connection(self, node1, node2, weight = None):
@@ -37,19 +41,21 @@ class Matrix:
         self.grid[pos1][pos2] = None
         self.grid[pos2][pos1] = None
 
-    #Returns list of connections, each connection only featured once though, of course, represented twice in adjacency grid. Func must be expanded to return (i, j, weight: "")
+    #Must think about whether Connection should be returning indexes of grid, or actual connection values
     def traverse_connections(self):
         spots = []
         coord_weights = []
         for j_index, j in enumerate(self.grid):
             ls = self.grid[j_index][j_index + 1:]
             coord_weights += [Connection(j_index, j_index + i[0], i[1]) for i in enumerate(ls)]
+        #Filter out non-connections
+        coord_weights = [i for i in coord_weights if i.weight is not None]
         return coord_weights
 
 if __name__ == "__main__":
     m = Matrix([1,2,3,4])
-    print(m.nodes)
     print(m.grid)
-    m.add_connection(1,2,5)
+    m.add_connection(1,3,5)
+    print(m.grid)
     ls = m.traverse_connections()
     print(ls)
