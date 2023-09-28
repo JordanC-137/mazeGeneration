@@ -23,7 +23,7 @@ class TestMatrix(unittest.TestCase):
     def test_traverse_connections(self):
         m = Matrix([1,2,3,4])
         m.add_connection(1, 3, 5)
-        expect = [Connection(0, 0, None), Connection(0, 1, 5), Connection(0, 2, None), Connection(1, 1, None), Connection(1, 2, None), Connection(2, 2, None)]
+        expect = [Connection(1,3,5)]
         self.assertEqual(m.traverse_connections(), expect)
 
 if __name__ == '__main__':

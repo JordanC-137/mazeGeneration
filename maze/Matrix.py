@@ -47,7 +47,7 @@ class Matrix:
         coord_weights = []
         for j_index, j in enumerate(self.grid):
             ls = self.grid[j_index][j_index + 1:]
-            coord_weights += [Connection(j_index, j_index + i[0], i[1]) for i in enumerate(ls)]
+            coord_weights += [Connection(self.element(j_index), self.element(j_index + i[0] + 1), i[1]) for i in enumerate(ls)]
         #Filter out non-connections
         coord_weights = [i for i in coord_weights if i.weight is not None]
         return coord_weights

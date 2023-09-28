@@ -17,8 +17,11 @@ class TestMaze(unittest.TestCase):
         m.add_connection(2, 3, 6)
         m.add_connection(4, 3, 7)
         m.add_connection(1, 4, 8)
-        traversed_connections = [i.weight for i in m.traverse_connections()]
-        self.assertEqual(traversed_connections,[5, None, 8, 6, None, 7])
+        traversed_connections = [Connection(1,2,5)]
+        traversed_connections.append(Connection(1,4,8))
+        traversed_connections.append(Connection(2,3,6))
+        traversed_connections.append(Connection(3,4,7))
+        self.assertEqual(m.traverse_connections(), traversed_connections)
     
     def test_cross_set_connection_function(self):
         s1 = [1,3,5]
