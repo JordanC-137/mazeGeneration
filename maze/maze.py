@@ -19,7 +19,6 @@ def pop_minimum_connection(ls):
     indexed_ls = [i for i in enumerate(ls)]
     index_of_min_connection, min_connection = min(indexed_ls, key = lambda x: x[1].weight)
     ls.pop(index_of_min_connection)
-    min_connection = (min_connection.x, min_connection.y)
     return (min_connection,ls)
 
 def cross_set_connections(s1, s2, ls):
@@ -33,15 +32,17 @@ def mst(m):
     s2 = m.nodes[1:]
     T = []
     edges = m.traverse_connections()
+    #Make E into a set
     E = cross_set_connections(s1, s2, edges)
     while s2:
+        print(E)
         min_edge, E_removed_minimum = pop_minimum_connection(E)
         E = E_removed_minimum
         T.append(min_edge)
-        v = E[1]
+        v = min_edge[1]
         s2.remove(v)
         s1.append(v)
-        E.update(cross_set_connections(s1, s2, E))
+        E += cross_set_connections(s1, s2, E)
     return T
 
 

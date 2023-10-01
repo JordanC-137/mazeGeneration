@@ -37,7 +37,7 @@ class TestMaze(unittest.TestCase):
         y = Connection(4,5,6)
         z = Connection(7,8,9)
         ls = [z,y,x]
-        self.assertEqual(pop_minimum_connection(ls), ((1,2), [z,y]))
+        self.assertEqual(pop_minimum_connection(ls), (x, [z,y]))
 
 if __name__ == '__main__':
     unittest.main()
