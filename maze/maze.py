@@ -15,7 +15,9 @@ def build_maze(m):
     m.add_connection((2,0), (1,0)) 
     m.add_connection((2,1), (2,2))
     
-def pop_minimum_connection(ls):
+    #When re-factoring, cross_set can likely be used to simplify this function
+    #TODO: Implement form of cross factoring with filter so popped connection is a cross connection, while still popping from initial list
+def pop_minimum_connection(s1, s2, ls):
     min_connection = min(ls, key = lambda x: x.weight)
     ls.remove(min_connection)
     return (min_connection,ls)
@@ -37,8 +39,10 @@ def mst(m):
     while s2:
         print(f"S1: {s1}".ljust(20) + f"S2: {s2}")
         print(f"T: {T}".ljust(20) + f"E: {E}")
-        print()
+        
         min_edge, E_removed_minimum = pop_minimum_connection(E)
+        print(f"Min Edge: {min_edge}")
+        print()
         E = E_removed_minimum
         T.append(min_edge)
         v = min_edge[1]
