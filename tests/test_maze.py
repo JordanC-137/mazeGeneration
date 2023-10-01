@@ -2,7 +2,7 @@ import unittest
 import sys
 sys.path.append("../maze")
 from Matrix import Matrix, Connection
-from maze import cross_set_connections
+from maze import cross_set_connections, pop_minimum_connection
 
 class TestMaze(unittest.TestCase):
     def test_maze1_nodes_and_edges(self):
@@ -31,6 +31,13 @@ class TestMaze(unittest.TestCase):
         ls = cross_set_connections(s1, s2, vals)
         ls = [(i.x, i.y) for i in ls]
         self.assertEqual(ls, [(1, 2), (3, 2)])
+    
+    def test_pop_minim_connection(self):
+        x = Connection(1,2,3)
+        y = Connection(4,5,6)
+        z = Connection(7,8,9)
+        ls = [z,y,x]
+        self.assertEqual(pop_minimum_connection(ls), (x, [z,y]))
 
 if __name__ == '__main__':
     unittest.main()
