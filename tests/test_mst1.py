@@ -35,7 +35,7 @@ class TestMST1(unittest.TestCase):
         m.add_connection(3,4,7)
         ls = m.traverse_connections()
         ls = cross_set_connections([0], [1,2,3,4], ls)
-        self.assertEqual(ls, [Connection(0, 1, 8), Connection(0, 2, 5)])
+        self.assertEqual(ls, {Connection(0, 1, 8), Connection(0, 2, 5)})
     
     def test_mst(self):
         m = Matrix([0, 1, 2, 3, 4])

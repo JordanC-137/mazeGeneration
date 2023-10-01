@@ -16,16 +16,16 @@ def build_maze(m):
     m.add_connection((2,1), (2,2))
     
 def pop_minimum_connection(ls):
-    indexed_ls = [i for i in enumerate(ls)]
-    index_of_min_connection, min_connection = min(indexed_ls, key = lambda x: x[1].weight)
-    ls.pop(index_of_min_connection)
+    min_connection = min(ls, key = lambda x: x.weight)
+    ls.remove(min_connection)
     return (min_connection,ls)
 
 def cross_set_connections(s1, s2, ls):
-    l1 = [i for i in ls if i.x in s1 and i.y in s2]
+    l1 = {i for i in ls if i.x in s1 and i.y in s2}
     #Twist x, y order for l2 so that maintained consistency for u in s1 and v in s2
-    l2 = [Connection(i.y, i.x, i.weight) for i in ls if i.x in s2 and i.y in s1]
-    return l1 + l2
+    l2 = {Connection(i.y, i.x, i.weight) for i in ls if i.x in s2 and i.y in s1}
+    l1.update(l2)
+    return l1
 
 def mst(m):
     s1 = [m.nodes[0]]
@@ -35,14 +35,16 @@ def mst(m):
     #Make E into a set
     E = cross_set_connections(s1, s2, edges)
     while s2:
-        print(E)
+        print(f"S1: {s1}".ljust(20) + f"S2: {s2}")
+        print(f"T: {T}".ljust(20) + f"E: {E}")
+        print()
         min_edge, E_removed_minimum = pop_minimum_connection(E)
         E = E_removed_minimum
         T.append(min_edge)
         v = min_edge[1]
         s2.remove(v)
         s1.append(v)
-        E += cross_set_connections(s1, s2, E)
+        E.update(cross_set_connections(s1, s2, edges))
     return T
 
 

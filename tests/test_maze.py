@@ -29,8 +29,8 @@ class TestMaze(unittest.TestCase):
         vals = [(1,2), (2, 3), (5,5)]
         vals = [Connection(i[0], i[1], 0) for i in vals]
         ls = cross_set_connections(s1, s2, vals)
-        ls = [(i.x, i.y) for i in ls]
-        self.assertEqual(ls, [(1, 2), (3, 2)])
+        ls = {(i.x, i.y) for i in ls}
+        self.assertEqual(ls, {(1, 2), (3, 2)})
     
     def test_pop_minim_connection(self):
         x = Connection(1,2,3)
