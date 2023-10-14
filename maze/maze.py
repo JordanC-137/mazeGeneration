@@ -44,12 +44,12 @@ def mst(m):
         print(f"Min Edge: {min_edge}")
         print()
         E = E_removed_minimum
-        T.append(min_edge)
+        T.append((min_edge.x, min_edge.y))
         v = min_edge[1]
         s2.remove(v)
         s1.append(v)
         E.update(cross_set_connections(s1, s2, edges))
-    return [(i.x, i.y) for i in T]
+    return T
 
 
 
