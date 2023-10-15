@@ -51,9 +51,3 @@ def mst(m):
         E.update(cross_set_connections(s1, s2, edges))
     return T
 
-
-
-a = Connection(0, 5, 10)
-b = Connection(1, 4, 6)
-c = Connection(3, 3, 2)
-#pop_minimum_connection([a,b,c])
