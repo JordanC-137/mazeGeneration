@@ -34,15 +34,9 @@ def mst(m):
     s2 = m.nodes[1:]
     T = []
     edges = m.traverse_connections()
-    #Make E into a set
     E = cross_set_connections(s1, s2, edges)
     while s2:
-        print(f"S1: {s1}".ljust(20) + f"S2: {s2}")
-        print(f"T: {T}".ljust(20) + f"E: {E}")
-        
         min_edge, E_removed_minimum = pop_minimum_connection(s1, s2, E)
-        print(f"Min Edge: {min_edge}")
-        print()
         E = E_removed_minimum
         T.append((min_edge.x, min_edge.y))
         v = min_edge[1]
