@@ -1,5 +1,6 @@
 from Matrix import Matrix, Connection
 
+#TODO: delete span_tree branch
 
 def build_maze(m):
     m.add_connection((0,0), (0,1))
