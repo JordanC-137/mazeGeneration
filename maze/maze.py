@@ -1,3 +1,4 @@
+import itertools
 from Matrix import Matrix, Connection
 
 #TODO: delete span_tree branch
@@ -15,6 +16,21 @@ def build_maze(m):
     m.add_connection((2,0), (2,1))
     m.add_connection((2,0), (1,0)) 
     m.add_connection((2,1), (2,2))
+
+def create_maze(n):
+    nodes = list(itertools.product(range(n), repeat = 2))
+    m = Matrix(nodes)
+
+    #Make horizontal connections
+    for j in range(n - 1):
+        for i in range(n - 1):
+            m.add_connection((j, i), (j, i+1))
+
+    #Make vertical connections
+    for i in range(n-1):
+        for j in range(n-1):
+            m.add_connection((j, i), (j + 1, i))
+    print(nodes)
     
 
 def pop_minimum_connection(s1, s2, ls):
@@ -46,3 +62,5 @@ def mst(m):
         E.update(cross_set_connections(s1, s2, edges))
     return T
 
+if __name__ == "__main__":
+    create_maze(5)
