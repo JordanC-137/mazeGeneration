@@ -22,15 +22,19 @@ def create_maze(n):
     m = Matrix(nodes)
 
     #Make horizontal connections
-    for j in range(n - 1):
+    for j in range(n): 
         for i in range(n - 1):
             m.add_connection((j, i), (j, i+1))
 
     #Make vertical connections
-    for i in range(n-1):
+    for i in range(n):
         for j in range(n-1):
             m.add_connection((j, i), (j + 1, i))
-    print(nodes)
+    print(m.nodes)
+    print()
+    print(m.traverse_connections())
+    print()
+    print(m.display_grid())
     
 
 def pop_minimum_connection(s1, s2, ls):
@@ -63,4 +67,4 @@ def mst(m):
     return T
 
 if __name__ == "__main__":
-    create_maze(5)
+    create_maze(3)
