@@ -63,7 +63,7 @@ def mst(m):
     return T
 
 def print_maze(m, dimensions):
-    connections = [(i.x, i.y) for i in m.traverse_connections()]
+    connections = [set([i.x, i.y]) for i in m.traverse_connections()]
 
     border = f"+{'w' * (2 * dimensions - 1)}+"
     print(border)
@@ -73,20 +73,20 @@ def print_maze(m, dimensions):
         if path:
             row += "w"
             for i in range(dimensions):
-                if ((i, j), (i+1, j)) in connections:
+                row += " "
+                if set([(i, j), (i+1, j)]) in connections:
                     row += " "
                 else:
                     row += "w"
-                row += "w"
             path = False
         else:
             row += "w"
             for i in range(dimensions):
-                if((i, j), (i, j+ 1)) in connections:
+                row += "w"
+                if set([(i, j), (i, j+ 1)]) in connections:
                     row += " "
                 else:
                     row += "w"
-                row += "w"
             path = False
         print(row)
     print(border)
