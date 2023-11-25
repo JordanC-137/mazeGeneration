@@ -30,11 +30,7 @@ def create_maze(n):
     for i in range(n):
         for j in range(n-1):
             m.add_connection((j, i), (j + 1, i))
-    print(m.nodes)
-    print()
-    print(m.traverse_connections())
-    print()
-    print(m.display_grid())
+    return m
     
 
 def pop_minimum_connection(s1, s2, ls):
