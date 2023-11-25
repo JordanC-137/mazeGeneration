@@ -62,5 +62,44 @@ def mst(m):
         E.update(cross_set_connections(s1, s2, edges))
     return T
 
+def print_maze(m, dimensions):
+    connections = [(i.x, i.y) for i in m.traverse_connections()]
+
+    border = f"+{'w' * (2 * dimensions - 1)}+"
+    print(border)
+    for j in range(dimensions - 1):
+        row = ""
+        path = True
+        if path:
+            row += "w"
+            for i in range(dimensions):
+                if ((i, j), (i+1, j)) in connections:
+                    row += " "
+                else:
+                    row += "w"
+                row += "w"
+            path = False
+        else:
+            row += "w"
+            for i in range(dimensions):
+                if((i, j), (i, j+ 1)) in connections:
+                    row += " "
+                else:
+                    row += "w"
+                row += "w"
+            path = False
+        print(row)
+    print(border)
+                
+            
+
+
+    """
+    for j in range(dimensions):
+        for i in range(dimensions):
+    """
+
+
 if __name__ == "__main__":
-    create_maze(3)
+    m = create_maze(3)
+    print_maze(m, 3)
