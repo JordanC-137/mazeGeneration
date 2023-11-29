@@ -46,6 +46,7 @@ def cross_set_connections(s1, s2, ls):
     l1.update(l2)
     return l1
 
+#Returns list of co-ord tuples E.g. [(0, 1), (0,2)]
 def mst(m):
     s1 = [m.nodes[0]]
     s2 = m.nodes[1:]
@@ -63,32 +64,32 @@ def mst(m):
     return T
 
 def print_maze(m, dimensions):
-    connections = [set([i.x, i.y]) for i in m.traverse_connections()]
-
+    #connections = [set([i.x, i.y]) for i in m.traverse_connections()]
+    conns = [((0, 0), (1, 0))]
     border = f"+{'w' * (2 * dimensions - 1)}+"
     print(border)
     for j in range(dimensions - 1):
-        row = ""
-        path = True
-        if path:
-            row += "w"
-            for i in range(dimensions):
-                row += " "
-                if set([(i, j), (i+1, j)]) in connections:
-                    row += " "
-                else:
-                    row += "w"
-            path = False
-        else:
-            row += "w"
-            for i in range(dimensions):
-                row += "w"
-                if set([(i, j), (i, j+ 1)]) in connections:
-                    row += " "
-                else:
-                    row += "w"
-            path = False
-        print(row)
+        #Build horizontal row consisting of nodes and horizontal connections
+        row = "w"
+        for i in range(dimensions - 1):
+            if ((j, i), (j, i + 1)) in conns:
+                row += "  "
+            else:
+                row += " w"
+        print(f"{row}")
+
+        row = "w"
+        for i in range(dimensions - 1):
+            if ((j, i), (j + 1, i)) in conns:
+                row += " w"
+            else:
+                row += "ww"
+        print(f"{row}")
+
+
+
+
+
     print(border)
                 
             
