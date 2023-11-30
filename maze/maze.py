@@ -67,6 +67,8 @@ def print_maze(conns, dimensions):
     #connections = [set([i.x, i.y]) for i in m.traverse_connections()]
     #conns = [((0, 0), (1, 0))]
     conns = [set(i) for i in conns]
+    border = 'w' * (dimensions * 2 + 1)
+    print(border)
     for j in range(dimensions):
         #Build horizontal row consisting of nodes and horizontal connections
         row = "w"
