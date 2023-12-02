@@ -75,27 +75,32 @@ def print_maze(m, conns, dimensions):
     #connections = [set([i.x, i.y]) for i in m.traverse_connections()]
     #conns = [((0, 0), (1, 0))]
     conns = [set(i) for i in conns]
-    border = 'w' * (dimensions * 2 + 1)
+    border = ' ' * (dimensions * 2 + 1)
 
     start_point, end_point = random.sample(m.nodes, 2)
 
-    print(border)
+    print(f"{term_colors.RED_BACKGROUND}{border}{term_colors.ENDC}")
     for j in range(dimensions):
         #Build horizontal row consisting of nodes and horizontal connections
-        row = "w"
+        row = term_colors.RED_BLOCK
         for i in range(dimensions):
             if set(((j, i), (j, i + 1))) in conns:
-                row += "  "
+                #row += "  "
+                row += term_colors.GREEN_BLOCK * 2
             else:
-                row += " w"
+                #row += " w"
+                row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
         print(f"{row}")
 
-        row = "w"
+        #row = "w"
+        row = term_colors.RED_BLOCK
         for i in range(dimensions):
             if set(((j, i), (j + 1, i))) in conns:
-                row += " w"
+                #row += " w"
+                row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
             else:
-                row += "ww"
+                #row += "ww"
+                row += term_colors.RED_BLOCK * 2
         print(f"{row}")
 
 
