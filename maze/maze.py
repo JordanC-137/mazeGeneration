@@ -1,5 +1,6 @@
 import itertools
 from Matrix import Matrix, Connection
+import random
 
 #TODO: delete span_tree branch
 class term_colors:
@@ -70,11 +71,14 @@ def mst(m):
         E.update(cross_set_connections(s1, s2, edges))
     return T
 
-def print_maze(conns, dimensions):
+def print_maze(m, conns, dimensions):
     #connections = [set([i.x, i.y]) for i in m.traverse_connections()]
     #conns = [((0, 0), (1, 0))]
     conns = [set(i) for i in conns]
     border = 'w' * (dimensions * 2 + 1)
+
+    start_point, end_point = random.sample(m.nodes, 2)
+
     print(border)
     for j in range(dimensions):
         #Build horizontal row consisting of nodes and horizontal connections
@@ -100,4 +104,4 @@ if __name__ == "__main__":
     m = create_maze(3)
     ls = mst(m)
     print(ls)
-    print_maze(ls, 3)
+    print_maze(m, ls, 3)
