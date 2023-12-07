@@ -4,7 +4,6 @@ import random
 
 #TODO: delete span_tree branch
 class term_colors:
-    GREEN_FOREGROUND = "\033[92m"
     ENDC = "\033[0m"
     GREEN_BACKGROUND = "\033[;42m"
     RED_BACKGROUND = "\033[;41m"
@@ -28,7 +27,6 @@ def build_maze(m):
 def create_maze(n):
     nodes = list(itertools.product(range(n), repeat = 2))
     m = Matrix(nodes)
-
     #Make horizontal connections
     for j in range(n): 
         for i in range(n - 1):
@@ -72,8 +70,6 @@ def mst(m):
     return T
 
 def print_maze(m, conns, dimensions):
-    #connections = [set([i.x, i.y]) for i in m.traverse_connections()]
-    #conns = [((0, 0), (1, 0))]
     conns = [set(i) for i in conns]
     border = ' ' * (dimensions * 2 + 1)
 
@@ -85,28 +81,21 @@ def print_maze(m, conns, dimensions):
         row = term_colors.RED_BLOCK
         for i in range(dimensions):
             if set(((j, i), (j, i + 1))) in conns:
-                #row += "  "
                 row += term_colors.GREEN_BLOCK * 2
             else:
-                #row += " w"
                 row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
         print(f"{row}")
-
-        #row = "w"
         row = term_colors.RED_BLOCK
         for i in range(dimensions):
             if set(((j, i), (j + 1, i))) in conns:
-                #row += " w"
                 row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
             else:
-                #row += "ww"
                 row += term_colors.RED_BLOCK * 2
         print(f"{row}")
 
 
 
 if __name__ == "__main__":
-    m = create_maze(3)
+    m = create_maze(20)
     ls = mst(m)
-    print(ls)
-    print_maze(m, ls, 3)
+    print_maze(m, ls, 20)
