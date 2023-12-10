@@ -2,7 +2,7 @@ import itertools
 from Matrix import Matrix, Connection
 import random
 
-#TODO: delete span_tree branch
+
 class term_colors:
     ENDC = "\033[0m"
     GREEN_BACKGROUND = "\033[;42m"
@@ -72,6 +72,7 @@ def mst(m):
         E.update(cross_set_connections(s1, s2, edges))
     return T
 
+#TODO: Include euclidean distance clause for start/end point selection
 def print_maze(m, conns, dimensions):
     conns_set = [set(i) for i in conns]
     border = ' ' * (dimensions * 2 + 1)
@@ -84,6 +85,8 @@ def print_maze(m, conns, dimensions):
         #Build horizontal row consisting of nodes and horizontal connections
         row = term_colors.RED_BLOCK
         for i in range(dimensions):
+
+            #Pick Yellow or Green whether co-ordinate is a start/end point or not
             if (j, i) == start_point or (j, i) == end_point:
                 block = term_colors.YELLOW_BLOCK
             else:
@@ -96,6 +99,8 @@ def print_maze(m, conns, dimensions):
                 #row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
                 row += f"{block}{term_colors.RED_BLOCK}"
         print(f"{row}")
+        
+        #Sub-loop for representing south connection for each co-ordinate
         row = term_colors.RED_BLOCK
         for i in range(dimensions):
             if set(((j, i), (j + 1, i))) in conns_set:
