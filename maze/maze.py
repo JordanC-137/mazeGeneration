@@ -7,10 +7,10 @@ class term_colors:
     ENDC = "\033[0m"
     GREEN_BACKGROUND = "\033[;42m"
     RED_BACKGROUND = "\033[;41m"
-    PURPLE_BACKGROUND = "\033[;105m"
+    YELLOW_BACKGROUND = "\033[;103m"
     GREEN_BLOCK = f"{GREEN_BACKGROUND} {ENDC}"
     RED_BLOCK = f"{RED_BACKGROUND} {ENDC}"
-    PURPLE_BLOCK = f"{PURPLE_BACKGROUND} {ENDC}"
+    YELLOW_BLOCK = f"{YELLOW_BACKGROUND} {ENDC}"
     
 
 def build_maze(m):
@@ -73,24 +73,32 @@ def mst(m):
     return T
 
 def print_maze(m, conns, dimensions):
-    conns = [set(i) for i in conns]
+    conns_set = [set(i) for i in conns]
     border = ' ' * (dimensions * 2 + 1)
 
     start_point, end_point = random.sample(m.nodes, 2)
-
+    print(f"Start: {start_point}    End: {end_point}")
     print(f"{term_colors.RED_BACKGROUND}{border}{term_colors.ENDC}")
+
     for j in range(dimensions):
         #Build horizontal row consisting of nodes and horizontal connections
         row = term_colors.RED_BLOCK
         for i in range(dimensions):
-            if set(((j, i), (j, i + 1))) in conns:
-                row += term_colors.GREEN_BLOCK * 2
+            if (j, i) == start_point or (j, i) == end_point:
+                block = term_colors.YELLOW_BLOCK
             else:
-                row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
+                block = term_colors.GREEN_BLOCK
+            if set(((j, i), (j, i + 1))) in conns_set:
+                #row += term_colors.GREEN_BLOCK * 2
+                row += f"{block}{term_colors.GREEN_BLOCK}"
+
+            else:
+                #row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
+                row += f"{block}{term_colors.RED_BLOCK}"
         print(f"{row}")
         row = term_colors.RED_BLOCK
         for i in range(dimensions):
-            if set(((j, i), (j + 1, i))) in conns:
+            if set(((j, i), (j + 1, i))) in conns_set:
                 row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
             else:
                 row += term_colors.RED_BLOCK * 2
