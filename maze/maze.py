@@ -7,8 +7,11 @@ class term_colors:
     ENDC = "\033[0m"
     GREEN_BACKGROUND = "\033[;42m"
     RED_BACKGROUND = "\033[;41m"
+    PURPLE_BACKGROUND = "\033[;105m"
     GREEN_BLOCK = f"{GREEN_BACKGROUND} {ENDC}"
     RED_BLOCK = f"{RED_BACKGROUND} {ENDC}"
+    PURPLE_BLOCK = f"{PURPLE_BACKGROUND} {ENDC}"
+    
 
 def build_maze(m):
     m.add_connection((0,0), (0,1))
