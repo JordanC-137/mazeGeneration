@@ -1,6 +1,7 @@
 import itertools
 from Matrix import Matrix, Connection
 import random
+from math import sqrt
 
 
 class term_colors:
@@ -72,12 +73,18 @@ def mst(m):
         E.update(cross_set_connections(s1, s2, edges))
     return T
 
+def get_euclidean_distance(a, b):
+    diff_in_y = b[1] - a[1]
+    diff_in_x = b[0] - a[0]
+    return sqrt(diff_in_x ** 2 + diff_in_y ** 2)
+
 #TODO: Include euclidean distance clause for start/end point selection
 def print_maze(m, conns, dimensions):
     conns_set = [set(i) for i in conns]
     border = ' ' * (dimensions * 2 + 1)
 
     start_point, end_point = random.sample(m.nodes, 2)
+    
     print(f"Start: {start_point}    End: {end_point}")
     print(f"{term_colors.RED_BACKGROUND}{border}{term_colors.ENDC}")
 
@@ -112,6 +119,7 @@ def print_maze(m, conns, dimensions):
 
 
 if __name__ == "__main__":
-    m = create_maze(20)
+    n = 20
+    m = create_maze(n)
     ls = mst(m)
-    print_maze(m, ls, 20)
+    print_maze(m, ls, n)
