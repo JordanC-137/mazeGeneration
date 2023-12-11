@@ -85,6 +85,9 @@ def print_maze(m, conns, dimensions):
 
     start_point, end_point = random.sample(m.nodes, 2)
     
+    while(get_euclidean_distance(start_point, end_point) < 10):
+        start_point, end_point = random.sample(m.nodes, 2)
+
     print(f"Start: {start_point}    End: {end_point}")
     print(f"{term_colors.RED_BACKGROUND}{border}{term_colors.ENDC}")
 
