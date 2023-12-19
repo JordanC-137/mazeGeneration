@@ -42,7 +42,6 @@ def cross_set_connections(s1, s2, ls):
     l1.update(l2)
     return l1
 
-#Returns list of co-ord tuples E.g. [(0, 1), (0,2)]
 def mst(m):
     s1 = [m.nodes[0]]
     s2 = m.nodes[1:]
@@ -64,7 +63,6 @@ def get_euclidean_distance(a, b):
     diff_in_x = b[0] - a[0]
     return sqrt(diff_in_x ** 2 + diff_in_y ** 2)
 
-#TODO: Include euclidean distance clause for start/end point selection
 def print_maze(m, conns, dimensions):
     conns_set = [set(i) for i in conns]
     border = ' ' * (dimensions * 2 + 1)
@@ -81,18 +79,14 @@ def print_maze(m, conns, dimensions):
         #Build horizontal row consisting of nodes and horizontal connections
         row = term_colors.RED_BLOCK
         for i in range(dimensions):
-
-            #Pick Yellow or Green whether co-ordinate is a start/end point or not
             if (i, j) == start_point or (i, j) == end_point:
                 block = term_colors.YELLOW_BLOCK
             else:
                 block = term_colors.GREEN_BLOCK
             if set(((i, j), (i + 1, j))) in conns_set:
-                #row += term_colors.GREEN_BLOCK * 2
                 row += f"{block}{term_colors.GREEN_BLOCK}"
 
             else:
-                #row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
                 row += f"{block}{term_colors.RED_BLOCK}"
         print(f"{row}")
         
