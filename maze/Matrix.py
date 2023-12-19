@@ -41,7 +41,6 @@ class Matrix:
         self.grid[pos1][pos2] = None
         self.grid[pos2][pos1] = None
 
-    #Must think about whether Connection should be returning indexes of grid, or actual connection values
     def traverse_connections(self):
         spots = []
         coord_weights = []
@@ -49,7 +48,7 @@ class Matrix:
             ls = self.grid[j_index][j_index + 1:]
             coord_weights += [Connection(self.element(j_index), self.element(j_index + i[0] + 1), i[1]) for i in enumerate(ls)]
         #Filter out non-connections
-        coord_weights = [i for i in coord_weights if i.weight is not None]
+        coord_weights = [i for i in coord_weights if i.weight]
         return coord_weights
 
 if __name__ == "__main__":
