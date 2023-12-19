@@ -13,19 +13,19 @@ class term_colors:
     RED_BLOCK = f"{RED_BACKGROUND} {ENDC}"
     YELLOW_BLOCK = f"{YELLOW_BACKGROUND} {ENDC}"
     
-
+#Keep x and y consistent
 def create_maze(n):
     nodes = list(itertools.product(range(n), repeat = 2))
     m = Matrix(nodes)
     #Make horizontal connections
     for j in range(n): 
         for i in range(n - 1):
-            m.add_connection((j, i), (j, i+1))
+            m.add_connection((i, j), (i+1, j))
 
     #Make vertical connections
     for i in range(n):
         for j in range(n-1):
-            m.add_connection((j, i), (j + 1, i))
+            m.add_connection((i, j), (i, j+1))
     return m
     
 
@@ -83,11 +83,11 @@ def print_maze(m, conns, dimensions):
         for i in range(dimensions):
 
             #Pick Yellow or Green whether co-ordinate is a start/end point or not
-            if (j, i) == start_point or (j, i) == end_point:
+            if (i, j) == start_point or (i, j) == end_point:
                 block = term_colors.YELLOW_BLOCK
             else:
                 block = term_colors.GREEN_BLOCK
-            if set(((j, i), (j, i + 1))) in conns_set:
+            if set(((i, j), (i + 1, j))) in conns_set:
                 #row += term_colors.GREEN_BLOCK * 2
                 row += f"{block}{term_colors.GREEN_BLOCK}"
 
@@ -99,7 +99,7 @@ def print_maze(m, conns, dimensions):
         #Sub-loop for representing south connection for each co-ordinate
         row = term_colors.RED_BLOCK
         for i in range(dimensions):
-            if set(((j, i), (j + 1, i))) in conns_set:
+            if set(((i, j), (i, j + 1))) in conns_set:
                 row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
             else:
                 row += term_colors.RED_BLOCK * 2
