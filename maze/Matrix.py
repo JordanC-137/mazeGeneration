@@ -17,9 +17,7 @@ class Matrix:
         
     def element(self, index):
         return self.nodes[index]
-
     
-    #Error handle in here to accomodate and catch connections to non-existant nodes. Maintain flexibility of build_maze
     def add_connection(self, node1, node2, weight = None):
         if node1 not in self.nodes or node2 not in self.nodes:
             raise IndexError("One of these nodes is not in the grid")
