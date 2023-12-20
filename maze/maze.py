@@ -13,7 +13,6 @@ class term_colors:
     RED_BLOCK = f"{RED_BACKGROUND} {ENDC}"
     YELLOW_BLOCK = f"{YELLOW_BACKGROUND} {ENDC}"
     
-#Keep x and y consistent
 def create_maze(n):
     nodes = list(itertools.product(range(n), repeat = 2))
     m = Matrix(nodes)
@@ -65,14 +64,12 @@ def get_euclidean_distance(a, b):
 
 def print_maze(m, conns, dimensions):
     conns_set = [set(i) for i in conns]
-    border = ' ' * (dimensions * 2 + 1)
-
     start_point, end_point = random.sample(m.nodes, 2)
     
     while(get_euclidean_distance(start_point, end_point) < 10):
         start_point, end_point = random.sample(m.nodes, 2)
 
-    print(f"Start: {start_point}    End: {end_point}")
+    border = ' ' * (dimensions * 2 + 1)
     print(f"{term_colors.RED_BACKGROUND}{border}{term_colors.ENDC}")
 
     for j in range(dimensions):
