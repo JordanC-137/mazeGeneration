@@ -15,7 +15,7 @@ class Matrix:
     def display_grid(self):
         [print(i) for i in self.grid]
         
-    def element(self, index):
+    def get_element(self, index):
         return self.nodes[index]
     
     def add_connection(self, node1, node2, weight = None):
@@ -40,14 +40,13 @@ class Matrix:
         self.grid[pos2][pos1] = None
 
     def traverse_connections(self):
-        spots = []
-        coord_weights = []
-        for j_index, j in enumerate(self.grid):
+        coordinate_weights = []
+        for j_index in range(len(self.grid)):
             ls = self.grid[j_index][j_index + 1:]
-            coord_weights += [Connection(self.element(j_index), self.element(j_index + i[0] + 1), i[1]) for i in enumerate(ls)]
+            coordinate_weights += [Connection(self.get_element(j_index), self.get_element(j_index + i[0] + 1), i[1]) for i in enumerate(ls)]
         #Filter out non-connections
-        coord_weights = [i for i in coord_weights if i.weight]
-        return coord_weights
+        coordinate_weights = [i for i in coordinate_weights if i.weight]
+        return coordinate_weights
 
 if __name__ == "__main__":
     m = Matrix([1,2,3,4])
