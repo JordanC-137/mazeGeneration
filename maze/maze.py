@@ -62,12 +62,19 @@ def get_euclidean_distance(a, b):
     diff_in_x = b[0] - a[0]
     return sqrt(diff_in_x ** 2 + diff_in_y ** 2)
 
+# If minimum_distance, only accept start and endpoints with a euclidean distance greater than that value
+def get_start_and_endpoints(maze, minimum_distance):
+    start_point, end_point = random.sample(maze.nodes, 2)
+    if minimum_distance is None:
+        return [start_point, end_point]
+    else:
+        while(get_euclidean_distance(start_point, end_point) < minimum_distance):
+            start_point, end_point = random.sample(maze.nodes, 2)
+    return [start_point, end_point]
+
 def print_maze(m, conns, dimensions):
     conns_set = [set(i) for i in conns]
-    start_point, end_point = random.sample(m.nodes, 2)
-    
-    while(get_euclidean_distance(start_point, end_point) < 10):
-        start_point, end_point = random.sample(m.nodes, 2)
+    start_point, end_point = get_start_and_endpoints(m, 10)
 
     border = ' ' * (dimensions * 2 + 1)
     print(f"{term_colors.RED_BACKGROUND}{border}{term_colors.ENDC}")
