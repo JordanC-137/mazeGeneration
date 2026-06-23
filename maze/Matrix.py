@@ -50,8 +50,7 @@ class Matrix:
 
 if __name__ == "__main__":
     m = Matrix([1,2,3,4])
-    print(m.grid)
+    m.display_grid()
     m.add_connection(1,3,5)
-    print(m.grid)
     ls = m.traverse_connections()
     print(ls)

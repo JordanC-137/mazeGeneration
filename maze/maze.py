@@ -13,6 +13,7 @@ class term_colors:
     RED_BLOCK = f"{RED_BACKGROUND} {ENDC}"
     YELLOW_BLOCK = f"{YELLOW_BACKGROUND} {ENDC}"
     
+# Create fully connected 'lattice' for maze
 def create_maze(n):
     nodes = list(itertools.product(range(n), repeat = 2))
     m = Matrix(nodes)
@@ -28,6 +29,7 @@ def create_maze(n):
     return m
     
 
+# Find and remove smallest connection
 def pop_minimum_connection(s1, s2, ls):
     filtered = [i for i in ls if i.x in s1 and i.y in s2] + [i for i in ls if i.x in s2 and i.y in s1]
     min_connection = min(filtered, key = lambda x: x.weight)
@@ -72,6 +74,7 @@ def get_start_and_endpoints(maze, minimum_distance):
             start_point, end_point = random.sample(maze.nodes, 2)
     return [start_point, end_point]
 
+# Create and output maze
 def print_maze(m, conns, dimensions):
     conns_set = [set(i) for i in conns]
     start_point, end_point = get_start_and_endpoints(m, 10)
@@ -83,11 +86,13 @@ def print_maze(m, conns, dimensions):
         #Build horizontal row consisting of nodes and horizontal connections
         row = term_colors.RED_BLOCK
         for i in range(dimensions):
-            if (i, j) == start_point or (i, j) == end_point:
+            current_point = (i, j)
+            if current_point == start_point or current_point == end_point:
                 block = term_colors.YELLOW_BLOCK
             else:
                 block = term_colors.GREEN_BLOCK
-            if set(((i, j), (i + 1, j))) in conns_set:
+            # Confirm that connection to right of current block, is clear/not a wall
+            if set((current_point, (i + 1, j))) in conns_set:
                 row += f"{block}{term_colors.GREEN_BLOCK}"
 
             else:
