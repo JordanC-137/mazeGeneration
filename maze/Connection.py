@@ -11,3 +11,13 @@ class Connection:
         else:
             return False
     
+
+    def ordered_interpretation():
+        pass
+
+    def __hash__(self):
+        sorted_points = sorted(self.points)
+        hash1 = hash(sorted_points[0])
+        hash2 = hash(sorted_points[1])
+        #Ordered interpretation so consistency 
+        return f"{hash1}{hash2}"
