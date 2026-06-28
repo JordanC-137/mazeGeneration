@@ -2,7 +2,7 @@ import itertools
 import random
 from collections import namedtuple
 
-Connection = namedtuple("Connection", "x y weight")
+ConnectionTuple = namedtuple("Connection", "x y weight")
 
 class Matrix:
     def __init__(self, nodes = None):
@@ -43,7 +43,7 @@ class Matrix:
         coordinate_weights = []
         for j_index in range(len(self.grid)):
             ls = self.grid[j_index][j_index + 1:]
-            coordinate_weights += [Connection(self.get_element(j_index), self.get_element(j_index + i[0] + 1), i[1]) for i in enumerate(ls)]
+            coordinate_weights += [ConnectionTuple(self.get_element(j_index), self.get_element(j_index + i[0] + 1), i[1]) for i in enumerate(ls)]
         #Filter out non-connections
         coordinate_weights = [i for i in coordinate_weights if i.weight]
         return coordinate_weights

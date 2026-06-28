@@ -1,5 +1,5 @@
 import itertools
-from Matrix import Matrix, Connection
+from Matrix import Matrix, ConnectionTuple
 import random
 from math import sqrt
 
@@ -39,7 +39,7 @@ def pop_minimum_connection(s1, s2, ls):
 def cross_set_connections(s1, s2, ls):
     l1 = {i for i in ls if i.x in s1 and i.y in s2}
     #Twist x, y order for l2 so that maintained consistency for u in s1 and v in s2
-    l2 = {Connection(i.y, i.x, i.weight) for i in ls if i.x in s2 and i.y in s1}
+    l2 = {ConnectionTuple(i.y, i.x, i.weight) for i in ls if i.x in s2 and i.y in s1}
     l1.update(l2)
     return l1
 
