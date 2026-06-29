@@ -63,6 +63,10 @@ class Matrix:
         coordinate_weights = [i for i in coordinate_weights if i.weight]
         return coordinate_weights
 
+    # Return each connection in maze
+    def get_connections(self):
+        return self.connection_set
+
 if __name__ == "__main__":
     m = Matrix([1,2,3,4])
     m.display_grid()

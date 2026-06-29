@@ -12,8 +12,9 @@ class Connection:
             return False
     
 
-    def ordered_interpretation():
-        pass
+    def __str__(self):
+        p1, p2 = sorted(self.points)
+        return f"Connection({p1}-{p2})"
 
     def __hash__(self):
         sorted_points = sorted(self.points)
