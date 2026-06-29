@@ -48,8 +48,12 @@ def pop_minimum_connection(s1, s2, ls):
     ls.remove(min_connection)
     return (min_connection,ls)
 
-def pop_minimum_connection():
-    pass
+# Expect ls to be a set
+def pop_minimum_connection_new(set1, set2, ls):
+    connections_spanning_sets = {connection for connection in ls if connection.has_value_in_each_set(set1, set2)}
+    min_connection = min(connections_spanning_sets, key=lambda x: x.weight)
+    connections_spanning_sets.remove(min_connection)
+    return(min_connection, connections_spanning_sets)
 
 def cross_set_connections(s1, s2, ls):
     l1 = {i for i in ls if i.x in s1 and i.y in s2}
@@ -79,6 +83,11 @@ def get_euclidean_distance(a, b):
     diff_in_x = b[0] - a[0]
     return sqrt(diff_in_x ** 2 + diff_in_y ** 2)
 
+def get_euclidean_distance_new(point1, point2):
+    diff_in_y = point1.y - point2.y
+    diff_in_x = point1.x - point2.x
+    return sqrt(diff_in_x ** 2 + diff_in_y ** 2)
+
 # If minimum_distance, only accept start and endpoints with a euclidean distance greater than that value
 def get_start_and_endpoints(maze, minimum_distance):
     start_point, end_point = random.sample(maze.nodes, 2)
@@ -86,6 +95,16 @@ def get_start_and_endpoints(maze, minimum_distance):
         return [start_point, end_point]
     else:
         while(get_euclidean_distance(start_point, end_point) < minimum_distance):
+            start_point, end_point = random.sample(maze.nodes, 2)
+    return [start_point, end_point]
+
+
+def get_start_and_end_new(maze, minimum_distance):
+    start_point, end_point = random.sample(maze.nodes, 2)
+    if minimum_distance is None:
+        return [start_point, end_point]
+    else:
+        while(get_euclidean_distance_new(start_point, end_point) < minimum_distance):
             start_point, end_point = random.sample(maze.nodes, 2)
     return [start_point, end_point]
 

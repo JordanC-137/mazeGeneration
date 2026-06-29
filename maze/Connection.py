@@ -11,6 +11,14 @@ class Connection:
         else:
             return False
     
+    # Given two sets of points, confirm if Connection has a point in one
+    # and a point in the other
+    def has_value_in_each_set(self, set1, set2):
+        p1, p2 = self.points
+        if (p1 in set1 and p2 in set2) or (p2 in set1 and p1 in set2):
+            return True
+        else:
+            return False
 
     def __str__(self):
         p1, p2 = sorted(self.points)
