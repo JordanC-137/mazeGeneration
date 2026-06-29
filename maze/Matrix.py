@@ -22,6 +22,7 @@ class Matrix:
     def get_element(self, index):
         return self.nodes[index]
     
+    # Delete
     def add_connection(self, node1, node2, weight = None):
         if node1 not in self.nodes or node2 not in self.nodes:
             raise IndexError("One of these nodes is not in the grid")
@@ -41,6 +42,7 @@ class Matrix:
         connection = Connection(point1, point2, weight)
         self.connection_set.add(connection)
 
+    # Delete
     def remove_connection(self, node1, node2):
         if node1 not in self.nodes or node2 not in self.nodes:
             raise IndexError("One of these nodes is not in the grid")
@@ -54,6 +56,7 @@ class Matrix:
         if connection in self.connection_set:
             self.connect_set.remove(connection)
 
+    # Delete
     def traverse_connections(self):
         coordinate_weights = []
         for j_index in range(len(self.grid)):
