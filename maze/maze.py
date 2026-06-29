@@ -1,5 +1,5 @@
 import itertools
-from Matrix import Matrix, ConnectionTuple
+from Matrix import Matrix, ConnectionTuple, Point
 import random
 from math import sqrt
 
@@ -28,6 +28,18 @@ def create_maze(n):
             m.add_connection((i, j), (i, j+1))
     return m
     
+def create_maze_new(n):
+    nodes = list(itertools.product(range(n), repeat = 2))
+    maze = Matrix(nodes)
+    for j in range(n): 
+        for i in range(n - 1):
+            maze.add_connection_new(Point((i, j)), Point((i+1, j)))
+
+    #Make vertical connections
+    for i in range(n):
+        for j in range(n-1):
+            maze.add_connection_new(Point((i, j)), Point((i, j+1)))
+    return maze
 
 # Find and remove smallest connection
 def pop_minimum_connection(s1, s2, ls):
@@ -35,6 +47,9 @@ def pop_minimum_connection(s1, s2, ls):
     min_connection = min(filtered, key = lambda x: x.weight)
     ls.remove(min_connection)
     return (min_connection,ls)
+
+def pop_minimum_connection():
+    pass
 
 def cross_set_connections(s1, s2, ls):
     l1 = {i for i in ls if i.x in s1 and i.y in s2}
