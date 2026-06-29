@@ -1,8 +1,4 @@
 class Point():
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-    
     def __init__(self, coordinate):
         self.x = coordinate[0]
         self.y = coordinate[1]
