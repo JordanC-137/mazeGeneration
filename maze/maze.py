@@ -66,7 +66,9 @@ def mst(m):
     s1 = [m.nodes[0]]
     s2 = m.nodes[1:]
     T = []
+    # Gets all connections
     edges = m.traverse_connections()
+    #Gets connections that span both sets
     E = cross_set_connections(s1, s2, edges)
     while s2:
         min_edge, E_removed_minimum = pop_minimum_connection(s1, s2, E)
@@ -146,6 +148,6 @@ def print_maze(m, conns, dimensions):
 
 if __name__ == "__main__":
     n = 20
-    m = create_maze(n)
+    m = create_maze_new(n)
     ls = mst(m)
     print_maze(m, ls, n)

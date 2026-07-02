@@ -29,4 +29,4 @@ class Connection:
         hash1 = hash(sorted_points[0])
         hash2 = hash(sorted_points[1])
 
-        return f"{hash1}{hash2}"
+        return hash(f"{hash1}{hash2}")
