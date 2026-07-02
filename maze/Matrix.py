@@ -72,15 +72,15 @@ class Matrix:
         return self.connection_set
 
     def rightwards_connection_to_point(self, current_point):
-        rightward_point = Point(current_point.x + 1, current_point.y)
-        if Connection(current_point, rightward_point) in self.connection_set:
+        rightward_point = Point((current_point.x + 1, current_point.y))
+        if Connection(current_point, rightward_point, None) in self.connection_set:
             return True
         else:
             return False
         
     def southward_connection_below_point(self, current_point):
-        southward_point = Point(current_point.x, current_point.y + 1)
-        if Connection(current_point, southward_point) in self.connection_set:
+        southward_point = Point((current_point.x, current_point.y + 1))
+        if Connection(current_point, southward_point, None) in self.connection_set:
             return True
         else:
             return False

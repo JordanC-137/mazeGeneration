@@ -176,10 +176,37 @@ def print_maze(m, conns, dimensions):
                 row += term_colors.RED_BLOCK * 2
         print(f"{row}")
 
+def print_maze_new(maze, connections, dimensions):
+    start_point, end_point = get_start_and_end_new(maze, 10)
+    # Create top border
+    border = ' ' * (dimensions * 2 + 1)
+    print(f"{term_colors.RED_BACKGROUND}{border}{term_colors.ENDC}")
 
+    for j in range(dimensions):
+        row = term_colors.RED_BLOCK
+        for i in range(dimensions):
+            current_point = Point((i, j))
+            if current_point == start_point or current_point == end_point:
+                block = term_colors.YELLOW_BLOCK
+            else:
+                block = term_colors.GREEN_BLOCK
+            # Lay GREEN block if connection right-ward to block
+            if m.rightwards_connection_to_point(current_point):
+                row += f"{block}{term_colors.RED_BLOCK}"
+        print(f"{row}")
+
+    # Represent south connection now
+    row = term_colors.RED_BLOCK
+    for i in range(dimensions):
+        current_point = Point((i, j))
+        if m.southward_connection_below_point(current_point):
+            row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
+        else:
+            row += term_colors.RED_BLOCK * 2
+    print(row)
 
 if __name__ == "__main__":
     n = 20
     m = create_maze_new(n)
     ls = create_minimum_spanning_tree(m)
-    print_maze(m, ls, n)
+    print_maze_new(m, ls, n)
