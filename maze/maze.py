@@ -87,10 +87,10 @@ def mst(m):
 # Take complete lattice structure of initial maze object and return
 # Minimum Spanning Tree
 def create_minimum_spanning_tree(m):
-    nodes_within_domain = m.nodes[0]
-    nodes_outside_domain = m.nodes[1:]
+    nodes_within_domain = set([m.nodes[0]])
+    nodes_outside_domain = set(m.nodes[1:])
 
-    minimum_span_tree = {}
+    minimum_span_tree = set()
     edges = m.connection_set
     # Stand in for E
     domain_frontier_edges = cross_set_connections_new(nodes_within_domain, nodes_outside_domain, edges)
@@ -110,6 +110,7 @@ def create_minimum_spanning_tree(m):
         
         # Update domain frontier
         domain_frontier_edges.update(cross_set_connections_new(nodes_within_domain, nodes_outside_domain, edges))
+    return minimum_span_tree
 
 def get_euclidean_distance(a, b):
     diff_in_y = b[1] - a[1]
