@@ -48,9 +48,12 @@ def pop_minimum_connection(s1, s2, ls):
     ls.remove(min_connection)
     return (min_connection,ls)
 
+def cross_set_connections_new(set1, set2, connections):
+    return {connection for connection in connections if connection.has_value_in_each_set(set1, set2)}
+
 # Expect ls to be a set
-def pop_minimum_connection_new(set1, set2, ls):
-    connections_spanning_sets = {connection for connection in ls if connection.has_value_in_each_set(set1, set2)}
+def pop_minimum_connection_new(set1, set2, connections):
+    connections_spanning_sets = cross_set_connections_new(set1, set2, connections)
     min_connection = min(connections_spanning_sets, key=lambda x: x.weight)
     connections_spanning_sets.remove(min_connection)
     return(min_connection, connections_spanning_sets)
@@ -61,6 +64,7 @@ def cross_set_connections(s1, s2, ls):
     l2 = {ConnectionTuple(i.y, i.x, i.weight) for i in ls if i.x in s2 and i.y in s1}
     l1.update(l2)
     return l1
+
 
 def mst(m):
     s1 = [m.nodes[0]]
@@ -79,6 +83,33 @@ def mst(m):
         s1.append(v)
         E.update(cross_set_connections(s1, s2, edges))
     return T
+
+# Take complete lattice structure of initial maze object and return
+# Minimum Spanning Tree
+def create_minimum_spanning_tree(m):
+    nodes_within_domain = m.nodes[0]
+    nodes_outside_domain = m.nodes[1:]
+
+    minimum_span_tree = {}
+    edges = m.connection_set
+    # Stand in for E
+    domain_frontier_edges = cross_set_connections_new(nodes_within_domain, nodes_outside_domain, edges)
+    while nodes_outside_domain:
+        lowest_weight_edge, updated_frontier_edges = pop_minimum_connection_new(nodes_within_domain, nodes_outside_domain, domain_frontier_edges)
+        domain_frontier_edges = updated_frontier_edges
+        minimum_span_tree.add(lowest_weight_edge)
+
+        # Move whichever end of lowest_weight_edge is outside_of_domain, to within_domain
+        point1, point2 = lowest_weight_edge.points
+        if point1 in nodes_outside_domain:
+            nodes_outside_domain.remove(point1)
+            nodes_within_domain.add(point1)
+        else:
+            nodes_outside_domain.remove(point2)
+            nodes_within_domain.add(point2)
+        
+        # Update domain frontier
+        domain_frontier_edges.update(cross_set_connections_new(nodes_within_domain, nodes_outside_domain, edges))
 
 def get_euclidean_distance(a, b):
     diff_in_y = b[1] - a[1]
@@ -149,5 +180,5 @@ def print_maze(m, conns, dimensions):
 if __name__ == "__main__":
     n = 20
     m = create_maze_new(n)
-    ls = mst(m)
+    ls = create_minimum_spanning_tree(m)
     print_maze(m, ls, n)

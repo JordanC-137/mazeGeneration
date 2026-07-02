@@ -12,6 +12,7 @@ class Matrix:
         else:
             list_of_tuples = list(itertools.product([0,1,2], repeat = 2))
         self.nodes = [Point(num_tuple) for num_tuple in list_of_tuples]
+        # Belongs to old set-up
         self.grid = [[None for i in range(len(self.nodes))] for i in range(len(self.nodes))]
 
         self.connection_set = set([])
