@@ -1,5 +1,5 @@
 import itertools
-from Matrix import Matrix, ConnectionTuple
+from Matrix import Matrix, ConnectionTuple, Point
 import random
 from math import sqrt
 
@@ -28,6 +28,18 @@ def create_maze(n):
             m.add_connection((i, j), (i, j+1))
     return m
     
+def create_maze_new(n):
+    nodes = list(itertools.product(range(n), repeat = 2))
+    maze = Matrix(nodes)
+    for j in range(n): 
+        for i in range(n - 1):
+            maze.add_connection_new(Point((i, j)), Point((i+1, j)))
+
+    #Make vertical connections
+    for i in range(n):
+        for j in range(n-1):
+            maze.add_connection_new(Point((i, j)), Point((i, j+1)))
+    return maze
 
 # Find and remove smallest connection
 def pop_minimum_connection(s1, s2, ls):
@@ -36,6 +48,16 @@ def pop_minimum_connection(s1, s2, ls):
     ls.remove(min_connection)
     return (min_connection,ls)
 
+def cross_set_connections_new(set1, set2, connections):
+    return {connection for connection in connections if connection.has_value_in_each_set(set1, set2)}
+
+# Expect ls to be a set
+def pop_minimum_connection_new(set1, set2, connections):
+    connections_spanning_sets = cross_set_connections_new(set1, set2, connections)
+    min_connection = min(connections_spanning_sets, key=lambda x: x.weight)
+    connections_spanning_sets.remove(min_connection)
+    return(min_connection, connections_spanning_sets)
+
 def cross_set_connections(s1, s2, ls):
     l1 = {i for i in ls if i.x in s1 and i.y in s2}
     #Twist x, y order for l2 so that maintained consistency for u in s1 and v in s2
@@ -43,11 +65,14 @@ def cross_set_connections(s1, s2, ls):
     l1.update(l2)
     return l1
 
+
 def mst(m):
     s1 = [m.nodes[0]]
     s2 = m.nodes[1:]
     T = []
+    # Gets all connections
     edges = m.traverse_connections()
+    #Gets connections that span both sets
     E = cross_set_connections(s1, s2, edges)
     while s2:
         min_edge, E_removed_minimum = pop_minimum_connection(s1, s2, E)
@@ -59,9 +84,42 @@ def mst(m):
         E.update(cross_set_connections(s1, s2, edges))
     return T
 
+# Take complete lattice structure of initial maze object and return
+# Minimum Spanning Tree
+def create_minimum_spanning_tree(m):
+    nodes_within_domain = set([m.nodes[0]])
+    nodes_outside_domain = set(m.nodes[1:])
+
+    minimum_span_tree = set()
+    edges = m.connection_set
+    # Stand in for E
+    domain_frontier_edges = cross_set_connections_new(nodes_within_domain, nodes_outside_domain, edges)
+    while nodes_outside_domain:
+        lowest_weight_edge, updated_frontier_edges = pop_minimum_connection_new(nodes_within_domain, nodes_outside_domain, domain_frontier_edges)
+        domain_frontier_edges = updated_frontier_edges
+        minimum_span_tree.add(lowest_weight_edge)
+
+        # Move whichever end of lowest_weight_edge is outside_of_domain, to within_domain
+        point1, point2 = lowest_weight_edge.points
+        if point1 in nodes_outside_domain:
+            nodes_outside_domain.remove(point1)
+            nodes_within_domain.add(point1)
+        else:
+            nodes_outside_domain.remove(point2)
+            nodes_within_domain.add(point2)
+        
+        # Update domain frontier
+        domain_frontier_edges.update(cross_set_connections_new(nodes_within_domain, nodes_outside_domain, edges))
+    return minimum_span_tree
+
 def get_euclidean_distance(a, b):
     diff_in_y = b[1] - a[1]
     diff_in_x = b[0] - a[0]
+    return sqrt(diff_in_x ** 2 + diff_in_y ** 2)
+
+def get_euclidean_distance_new(point1, point2):
+    diff_in_y = point1.y - point2.y
+    diff_in_x = point1.x - point2.x
     return sqrt(diff_in_x ** 2 + diff_in_y ** 2)
 
 # If minimum_distance, only accept start and endpoints with a euclidean distance greater than that value
@@ -71,6 +129,16 @@ def get_start_and_endpoints(maze, minimum_distance):
         return [start_point, end_point]
     else:
         while(get_euclidean_distance(start_point, end_point) < minimum_distance):
+            start_point, end_point = random.sample(maze.nodes, 2)
+    return [start_point, end_point]
+
+
+def get_start_and_end_new(maze, minimum_distance):
+    start_point, end_point = random.sample(maze.nodes, 2)
+    if minimum_distance is None:
+        return [start_point, end_point]
+    else:
+        while(get_euclidean_distance_new(start_point, end_point) < minimum_distance):
             start_point, end_point = random.sample(maze.nodes, 2)
     return [start_point, end_point]
 
@@ -108,10 +176,37 @@ def print_maze(m, conns, dimensions):
                 row += term_colors.RED_BLOCK * 2
         print(f"{row}")
 
+def print_maze_new(maze, connections, dimensions):
+    start_point, end_point = get_start_and_end_new(maze, 10)
+    # Create top border
+    border = ' ' * (dimensions * 2 + 1)
+    print(f"{term_colors.RED_BACKGROUND}{border}{term_colors.ENDC}")
 
+    for j in range(dimensions):
+        row = term_colors.RED_BLOCK
+        for i in range(dimensions):
+            current_point = Point((i, j))
+            if current_point == start_point or current_point == end_point:
+                block = term_colors.YELLOW_BLOCK
+            else:
+                block = term_colors.GREEN_BLOCK
+            # Lay GREEN block if connection right-ward to block
+            if m.rightwards_connection_to_point(current_point):
+                row += f"{block}{term_colors.RED_BLOCK}"
+        print(f"{row}")
+
+    # Represent south connection now
+    row = term_colors.RED_BLOCK
+    for i in range(dimensions):
+        current_point = Point((i, j))
+        if m.southward_connection_below_point(current_point):
+            row += f"{term_colors.GREEN_BLOCK}{term_colors.RED_BLOCK}"
+        else:
+            row += term_colors.RED_BLOCK * 2
+    print(row)
 
 if __name__ == "__main__":
     n = 20
-    m = create_maze(n)
-    ls = mst(m)
-    print_maze(m, ls, n)
+    m = create_maze_new(n)
+    ls = create_minimum_spanning_tree(m)
+    print_maze_new(m, ls, n)

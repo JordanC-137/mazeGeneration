@@ -1,16 +1,21 @@
 import itertools
 import random
 from collections import namedtuple
-
+from Point import Point
+from Connection import Connection
 ConnectionTuple = namedtuple("Connection", "x y weight")
 
 class Matrix:
     def __init__(self, nodes = None):
         if nodes:
-            self.nodes = nodes
+            list_of_tuples = nodes
         else:
-            self.nodes = list(itertools.product([0,1,2], repeat = 2))
+            list_of_tuples = list(itertools.product([0,1,2], repeat = 2))
+        self.nodes = [Point(num_tuple) for num_tuple in list_of_tuples]
+        # Belongs to old set-up
         self.grid = [[None for i in range(len(self.nodes))] for i in range(len(self.nodes))]
+
+        self.connection_set = set([])
 
     def display_grid(self):
         [print(i) for i in self.grid]
@@ -18,6 +23,7 @@ class Matrix:
     def get_element(self, index):
         return self.nodes[index]
     
+    # Delete
     def add_connection(self, node1, node2, weight = None):
         if node1 not in self.nodes or node2 not in self.nodes:
             raise IndexError("One of these nodes is not in the grid")
@@ -31,6 +37,13 @@ class Matrix:
             self.grid[pos1][pos2] = random_value
             self.grid[pos2][pos1] = random_value
 
+    def add_connection_new(self, point1, point2, weight = None):
+        if weight is None:
+            weight = random.randint(0, 20)
+        connection = Connection(point1, point2, weight)
+        self.connection_set.add(connection)
+
+    # Delete
     def remove_connection(self, node1, node2):
         if node1 not in self.nodes or node2 not in self.nodes:
             raise IndexError("One of these nodes is not in the grid")
@@ -39,6 +52,12 @@ class Matrix:
         self.grid[pos1][pos2] = None
         self.grid[pos2][pos1] = None
 
+    def remove_connection_new(self, point1, point2):
+        connection = Connection(point1, point2, None)
+        if connection in self.connection_set:
+            self.connect_set.remove(connection)
+
+    # Delete
     def traverse_connections(self):
         coordinate_weights = []
         for j_index in range(len(self.grid)):
@@ -47,6 +66,24 @@ class Matrix:
         #Filter out non-connections
         coordinate_weights = [i for i in coordinate_weights if i.weight]
         return coordinate_weights
+
+    # Return each connection in maze
+    def get_connections(self):
+        return self.connection_set
+
+    def rightwards_connection_to_point(self, current_point):
+        rightward_point = Point((current_point.x + 1, current_point.y))
+        if Connection(current_point, rightward_point, None) in self.connection_set:
+            return True
+        else:
+            return False
+        
+    def southward_connection_below_point(self, current_point):
+        southward_point = Point((current_point.x, current_point.y + 1))
+        if Connection(current_point, southward_point, None) in self.connection_set:
+            return True
+        else:
+            return False
 
 if __name__ == "__main__":
     m = Matrix([1,2,3,4])
