@@ -20,4 +20,4 @@ jobs:
     steps:
     - uses: actions/checkout@v7
     - name: Confirm maze.py runs
-      run: python maze.py
+      run: python maze/maze.py
